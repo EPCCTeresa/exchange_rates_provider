@@ -1,24 +1,46 @@
-# README
+# Exchange Rate API
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is a simple Rails API that fetches exchange rates from the Czech National Bank (CNB) and exposes them through a RESTful endpoint.
 
-Things you may want to cover:
+## **Setup**
 
-* Ruby version
+### **Prerequisites**
 
-* System dependencies
+Before you can run this application, ensure that you have the following installed:
 
-* Configuration
+- Ruby (preferably 3.2 or above)
+- Rails (preferably 7 or above)
+- SQLite3 (or your preferred database)
+- Git (for version control)
 
-* Database creation
+### **Installation**
 
-* Database initialization
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/your-username/exchange_rate_api.git
+   cd exchange_rate_api
+   
+2. **Install dependencies**:
+   ```bash
+   bundle install
 
-* How to run the test suite
+3. **Run the server**:
+   ```bash
+   rails server
 
-* Services (job queues, cache servers, search engines, etc.)
 
-* Deployment instructions
+## API Endpoints
+### GET /exchange_rates
 
-* ...
+## Development
+If you would like to contribute or run the application locally for development:
+
+Run tests:
+```
+bin/rails rspec
+```
+
+## Next Steps
+- Implement logic to fetch exchange rates from the CNB API.
+- Develop additional features like rate caching or querying exchange rates by currency code.
+- Add error handling for failed CNB API requests.
