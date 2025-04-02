@@ -45,6 +45,21 @@ RSpec.describe Clients::CnbExchangeRates, type: :client do
       end
     end
 
+    context 'when the response is not successful' do
+      let(:client) { Clients::CnbExchangeRates.new }
+
+      before do
+        uri = URI.parse(Clients::CnbExchangeRates::API_URL)
+        response = instance_double(Net::HTTPResponse, body: "Error message", code: "500", message: "Error message", is_a?: false)
+        allow(Net::HTTP).to receive(:get_response).with(uri).and_return(response)
+      end
+
+      it 'raises an error with the appropriate message' do
+        expect { client.fetch_exchange_rates }
+          .to raise_error(CnbExchangeRateError, "Error fetching exchange rates from CNB: Error message")
+      end
+    end
+
     context 'when the response format is invalid or incomplete' do
       let(:invalid_response_body) do
         "Invalid|Data|Here\n" \
@@ -52,10 +67,9 @@ RSpec.describe Clients::CnbExchangeRates, type: :client do
       end
 
       before do
-        # Mocking Net::HTTP.get_response to return an invalid response format
         uri = URI.parse('https://api.example.com/exchange_rates')
         response = instance_double(Net::HTTPResponse, body: invalid_response_body, is_a?: true)
-        allow(response).to receive(:code).and_return("200")  # Set HTTP code to 200 (success)
+        allow(response).to receive(:code).and_return("200")
         allow(Net::HTTP).to receive(:get_response).and_return(response)
       end
 
