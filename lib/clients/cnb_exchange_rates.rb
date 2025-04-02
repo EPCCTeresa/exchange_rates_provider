@@ -1,3 +1,5 @@
+require "net/http"
+
 class CnbExchangeRateError < StandardError
   def initialize(msg = "Error fetching exchange rates from CNB")
     super(msg)
