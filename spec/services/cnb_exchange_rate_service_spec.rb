@@ -37,5 +37,17 @@ RSpec.describe CnbExchangeRateService, type: :service do
         expect(result).to eq(all_rates)
       end
     end
+
+    context 'when the rates are cached' do
+      let(:country) { nil }
+      it 'returns the cached exchange rates' do
+        allow_any_instance_of(Clients::CnbExchangeRates).to receive(:fetch_exchange_rates).and_return(all_rates)
+        result = service.call
+
+        expect(result).to eq(all_rates)
+
+        expect(Rails.cache.read(CnbExchangeRateService::CACHE_KEY)).to eq(all_rates)
+      end
+    end
   end
 end
